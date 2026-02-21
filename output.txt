@@ -1,0 +1,450 @@
+
+> react-example@1.0.0 dev
+> tsx server.ts
+
+Γ£à Connected to Turso database (cloud)
+Server running on http://localhost:3000
+2026-02-21T09:36:38.493Z - GET /api/customers
+SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at parse (C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\body-parser\lib\types\json.js:92:19)
+    at C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:226:14)
+    at invokeCallback (C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\raw-body\index.js:238:16)
+    at done (C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:508:20)
+    at endReadableNT (node:internal/streams/readable:1729:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at parse (C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\body-parser\lib\types\json.js:92:19)
+    at C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:226:14)
+    at invokeCallback (C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\raw-body\index.js:238:16)
+    at done (C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\Users\Administrator\Downloads\Laundry-tuorsodb\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:508:20)
+    at endReadableNT (node:internal/streams/readable:1729:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+2026-02-21T09:41:26.082Z - GET /
+[2m4:41:45 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m4:41:46 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m4:41:46 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T09:42:23.885Z - GET /api/transactions
+[2m5:00:09 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:29.332Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+[2m6:00:37 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:00:37 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:00:37 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:39.997Z - PUT /api/transactions/3
+2026-02-21T11:00:41.237Z - GET /api/customers
+2026-02-21T11:00:41.623Z - GET /api/transactions
+2026-02-21T11:00:41.627Z - GET /api/settings
+[2m6:00:45 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:50.670Z - GET /
+[2m6:00:50 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:51.888Z - GET /src/main.tsx?t=1771671645334
+2026-02-21T11:00:51.895Z - GET /@vite/client
+[2m6:00:51 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:51.956Z - GET /@react-refresh
+2026-02-21T11:00:52.057Z - GET /node_modules/.vite/deps/react_jsx-dev-runtime.js?v=68738f88
+[2m6:00:52 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:52.066Z - GET /node_modules/.vite/deps/react.js?v=68738f88
+[2m6:00:52 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:52.307Z - GET /node_modules/.vite/deps/react-dom_client.js?v=68738f88
+2026-02-21T11:00:52.352Z - GET /src/index.css?t=1771671650739
+[2m6:00:53 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:53.365Z - GET /src/App.tsx
+[2m6:00:53 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:53.519Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:00:53.521Z - GET /node_modules/.vite/deps/chunk-2RADP4CJ.js?v=68738f88
+2026-02-21T11:00:53.524Z - GET /node_modules/.vite/deps/chunk-6KCF6AHO.js?v=68738f88
+2026-02-21T11:00:53.527Z - GET /node_modules/.vite/deps/chunk-DC5AMYBS.js?v=68738f88
+[2m6:00:53 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:54.403Z - GET /node_modules/.vite/deps/motion_react.js?v=68738f88
+2026-02-21T11:00:54.412Z - GET /node_modules/.vite/deps/lucide-react.js?v=68738f88
+2026-02-21T11:00:54.434Z - GET /node_modules/.vite/deps/jspdf.js?v=68738f88
+2026-02-21T11:00:54.468Z - GET /src/lib/utils.ts
+2026-02-21T11:00:54.473Z - GET /node_modules/.vite/deps/jspdf-autotable.js?v=68738f88
+[2m6:00:54 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:54.546Z - GET /node_modules/.vite/deps/xlsx.js?v=68738f88
+2026-02-21T11:00:54.650Z - GET /node_modules/.vite/deps/qrcode.js?v=68738f88
+2026-02-21T11:00:54.652Z - GET /node_modules/.vite/deps/clsx.js?v=68738f88
+[2m6:00:54 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:54.736Z - GET /node_modules/.vite/deps/tailwind-merge.js?v=68738f88
+2026-02-21T11:00:54.973Z - GET /
+2026-02-21T11:00:55.465Z - GET /node_modules/.vite/deps/chunk-VTS4FBCU.js?v=68738f88
+[2m6:00:55 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:55.514Z - GET /src/main.tsx?t=1771671654658
+2026-02-21T11:00:55.597Z - GET /@vite/client
+2026-02-21T11:00:55.603Z - GET /@react-refresh
+[2m6:00:55 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:55.931Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:00:55.935Z - GET /src/index.css?t=1771671655483
+2026-02-21T11:00:55.937Z - GET /src/App.tsx
+2026-02-21T11:00:56.288Z - GET /node_modules/.vite/deps/xlsx.js?v=68738f88
+2026-02-21T11:00:56.320Z - GET /node_modules/.vite/deps/chunk-VTS4FBCU.js?v=68738f88
+2026-02-21T11:00:56.336Z - GET /src/lib/utils.ts
+[2m6:00:56 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:56.414Z - GET /node_modules/.vite/deps/chunk-D7ZASVPN.js?v=68738f88
+2026-02-21T11:00:56.771Z - GET /
+2026-02-21T11:00:57.340Z - GET /src/main.tsx?t=1771671656411
+2026-02-21T11:00:57.351Z - GET /@vite/client
+2026-02-21T11:00:57.354Z - GET /@react-refresh
+[2m6:00:57 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:57.467Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:00:57.476Z - GET /src/index.css?t=1771671656411
+2026-02-21T11:00:57.479Z - GET /src/App.tsx
+2026-02-21T11:00:57.495Z - GET /src/lib/utils.ts
+[2m6:00:59 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:00:59.521Z - GET /
+2026-02-21T11:01:00.107Z - GET /src/main.tsx?t=1771671659354
+2026-02-21T11:01:00.118Z - GET /@vite/client
+2026-02-21T11:01:00.122Z - GET /@react-refresh
+[2m6:01:00 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:01:00 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:00.313Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:01:00.392Z - GET /src/index.css?t=1771671659354
+2026-02-21T11:01:01.450Z - GET /src/App.tsx
+[2m6:01:01 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:01.749Z - GET /
+[2m6:01:01 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:02.093Z - GET /
+2026-02-21T11:01:02.518Z - GET /src/lib/utils.ts
+2026-02-21T11:01:05.438Z - GET /src/main.tsx?t=1771671661773
+2026-02-21T11:01:05.448Z - GET /@vite/client
+2026-02-21T11:01:05.536Z - GET /@react-refresh
+[2m6:01:05 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:05.816Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:01:05.819Z - GET /src/index.css?t=1771671661773
+2026-02-21T11:01:05.831Z - GET /src/App.tsx
+2026-02-21T11:01:07.045Z - GET /src/lib/utils.ts
+[2m6:01:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:01:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:11.761Z - GET /
+2026-02-21T11:01:11.772Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:01:11.778Z - GET /api/customers
+2026-02-21T11:01:11.795Z - GET /api/transactions
+2026-02-21T11:01:11.850Z - GET /api/settings
+[2m6:01:12 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:12.674Z - GET /src/main.tsx?t=1771671667127
+2026-02-21T11:01:12.679Z - GET /@vite/client
+2026-02-21T11:01:12.682Z - GET /@react-refresh
+2026-02-21T11:01:12.731Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:01:12.752Z - GET /src/App.tsx
+2026-02-21T11:01:12.763Z - GET /src/index.css?t=1771671672668
+2026-02-21T11:01:12.767Z - GET /src/lib/utils.ts
+[2m6:01:12 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:01:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:01:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:13.687Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:01:13.739Z - GET /api/customers
+2026-02-21T11:01:13.833Z - GET /api/transactions
+2026-02-21T11:01:13.878Z - GET /api/settings
+[2m6:01:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:13.903Z - GET /
+2026-02-21T11:01:13.906Z - GET /
+[2m6:01:14 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:14.207Z - GET /api/customers
+2026-02-21T11:01:14.210Z - GET /api/transactions
+2026-02-21T11:01:14.214Z - GET /api/settings
+2026-02-21T11:01:14.223Z - GET /
+[2m6:01:14 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:01:14.720Z - GET /
+2026-02-21T11:01:14.958Z - GET /
+2026-02-21T11:01:15.039Z - GET /src/main.tsx?t=1771671674717
+2026-02-21T11:01:15.041Z - GET /@vite/client
+2026-02-21T11:01:15.043Z - GET /@react-refresh
+2026-02-21T11:01:15.066Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:01:15.071Z - GET /src/index.css?t=1771671674717
+2026-02-21T11:01:15.074Z - GET /src/App.tsx
+2026-02-21T11:01:15.123Z - GET /src/lib/utils.ts
+2026-02-21T11:01:23.543Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:01:23.546Z - GET /api/customers
+2026-02-21T11:01:23.552Z - GET /api/transactions
+2026-02-21T11:01:23.595Z - GET /api/settings
+2026-02-21T11:01:24.668Z - GET /api/settings
+2026-02-21T11:01:24.680Z - GET /api/customers
+2026-02-21T11:01:24.695Z - GET /api/transactions
+2026-02-21T11:02:09.781Z - POST /api/customers
+2026-02-21T11:02:10.523Z - GET /api/customers
+2026-02-21T11:02:10.531Z - GET /api/transactions
+2026-02-21T11:02:10.636Z - GET /api/settings
+2026-02-21T11:02:59.304Z - GET /
+2026-02-21T11:02:59.373Z - GET /@vite/client
+2026-02-21T11:02:59.377Z - GET /src/main.tsx?t=1771671674717
+2026-02-21T11:02:59.391Z - GET /@react-refresh
+2026-02-21T11:02:59.433Z - GET /src/App.tsx
+2026-02-21T11:02:59.449Z - GET /src/index.css?t=1771671674717
+2026-02-21T11:02:59.463Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:02:59.682Z - GET /src/lib/utils.ts
+2026-02-21T11:03:00.993Z - GET /api/customers
+2026-02-21T11:03:01.004Z - GET /api/transactions
+2026-02-21T11:03:01.010Z - GET /api/settings
+2026-02-21T11:03:01.579Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:03:03.605Z - GET /api/customers
+2026-02-21T11:03:03.609Z - GET /api/transactions
+2026-02-21T11:03:03.612Z - GET /api/settings
+[2m6:04:33 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:34.619Z - GET /
+2026-02-21T11:04:35.028Z - GET /src/main.tsx?t=1771671873636
+2026-02-21T11:04:35.031Z - GET /@vite/client
+[2m6:04:35 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:35.113Z - GET /@react-refresh
+2026-02-21T11:04:35.146Z - GET /src/App.tsx
+2026-02-21T11:04:35.157Z - GET /src/index.css?t=1771671873636
+[2m6:04:35 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:04:35 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:35.295Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:04:35.684Z - GET /src/lib/utils.ts
+[2m6:04:35 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:36.710Z - GET /
+2026-02-21T11:04:37.073Z - GET /src/main.tsx?t=1771671875696
+2026-02-21T11:04:37.114Z - GET /@vite/client
+2026-02-21T11:04:37.120Z - GET /@react-refresh
+[2m6:04:37 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:37.192Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:04:37.222Z - GET /src/index.css?t=1771671875696
+2026-02-21T11:04:37.227Z - GET /src/App.tsx
+[2m6:04:37 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:37.294Z - GET /src/lib/utils.ts
+[2m6:04:37 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:38.081Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:04:38.130Z - GET /api/customers
+2026-02-21T11:04:38.457Z - GET /api/transactions
+2026-02-21T11:04:38.478Z - GET /api/settings
+2026-02-21T11:04:38.683Z - GET /
+2026-02-21T11:04:38.963Z - GET /api/customers
+[2m6:04:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:39.018Z - GET /src/main.tsx?t=1771671877310
+2026-02-21T11:04:39.052Z - GET /@react-refresh
+2026-02-21T11:04:39.055Z - GET /@vite/client
+2026-02-21T11:04:39.067Z - GET /src/App.tsx
+[2m6:04:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:39.088Z - GET /src/index.css?t=1771671879011
+2026-02-21T11:04:39.099Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:04:39.289Z - GET /src/lib/utils.ts
+[2m6:04:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:04:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:40.030Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:04:40.059Z - GET /api/customers
+2026-02-21T11:04:40.063Z - GET /api/transactions
+2026-02-21T11:04:40.069Z - GET /api/settings
+2026-02-21T11:04:40.167Z - GET /api/customers
+2026-02-21T11:04:40.170Z - GET /api/transactions
+2026-02-21T11:04:40.174Z - GET /api/settings
+2026-02-21T11:04:40.291Z - GET /
+2026-02-21T11:04:40.552Z - GET /@vite/client
+2026-02-21T11:04:40.555Z - GET /src/main.tsx?t=1771671879563
+[2m6:04:40 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:40.590Z - GET /@react-refresh
+2026-02-21T11:04:40.595Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:04:40.671Z - GET /src/App.tsx
+2026-02-21T11:04:40.681Z - GET /src/index.css?t=1771671879563
+2026-02-21T11:04:40.702Z - GET /src/lib/utils.ts
+[2m6:04:40 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:41.459Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:04:41.490Z - GET /api/customers
+2026-02-21T11:04:41.503Z - GET /api/transactions
+2026-02-21T11:04:41.512Z - GET /api/settings
+2026-02-21T11:04:41.589Z - GET /api/customers
+2026-02-21T11:04:41.627Z - GET /api/transactions
+2026-02-21T11:04:41.630Z - GET /api/settings
+2026-02-21T11:04:42.303Z - GET /
+2026-02-21T11:04:42.586Z - GET /src/main.tsx?t=1771671880726
+2026-02-21T11:04:42.595Z - GET /@vite/client
+2026-02-21T11:04:42.606Z - GET /@react-refresh
+[2m6:04:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:42.644Z - GET /src/App.tsx
+2026-02-21T11:04:42.647Z - GET /src/index.css?t=1771671880726
+2026-02-21T11:04:42.660Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:04:42.679Z - GET /src/lib/utils.ts
+[2m6:04:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:04:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:43.257Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:04:43.273Z - GET /api/customers
+2026-02-21T11:04:43.290Z - GET /api/transactions
+2026-02-21T11:04:43.302Z - GET /api/settings
+2026-02-21T11:04:43.370Z - GET /api/customers
+2026-02-21T11:04:43.387Z - GET /api/transactions
+2026-02-21T11:04:43.400Z - GET /api/settings
+[2m6:04:44 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:44.326Z - GET /
+2026-02-21T11:04:44.537Z - GET /src/main.tsx?t=1771671884126
+2026-02-21T11:04:44.543Z - GET /@vite/client
+2026-02-21T11:04:44.547Z - GET /@react-refresh
+[2m6:04:44 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:44.602Z - GET /src/index.css?t=1771671884126
+2026-02-21T11:04:44.604Z - GET /src/App.tsx
+2026-02-21T11:04:44.606Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:04:44.626Z - GET /src/lib/utils.ts
+[2m6:04:44 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:45.320Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:04:45.343Z - GET /api/customers
+2026-02-21T11:04:45.356Z - GET /api/transactions
+2026-02-21T11:04:45.397Z - GET /api/settings
+2026-02-21T11:04:45.581Z - GET /api/customers
+2026-02-21T11:04:45.588Z - GET /api/transactions
+2026-02-21T11:04:45.596Z - GET /api/settings
+2026-02-21T11:04:46.354Z - GET /
+2026-02-21T11:04:46.838Z - GET /src/main.tsx?t=1771671884665
+2026-02-21T11:04:46.843Z - GET /@vite/client
+2026-02-21T11:04:46.869Z - GET /@react-refresh
+[2m6:04:46 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:46.990Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:04:46.995Z - GET /src/index.css?t=1771671884665
+2026-02-21T11:04:46.997Z - GET /src/App.tsx
+2026-02-21T11:04:47.052Z - GET /src/lib/utils.ts
+[2m6:04:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:47.557Z - GET /
+[2m6:04:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:04:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:04:48.134Z - GET /src/main.tsx?t=1771671887653
+2026-02-21T11:04:48.141Z - GET /@vite/client
+2026-02-21T11:04:48.146Z - GET /@react-refresh
+2026-02-21T11:04:48.207Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:04:48.232Z - GET /src/index.css?t=1771671887653
+2026-02-21T11:04:48.241Z - GET /src/App.tsx
+2026-02-21T11:04:48.326Z - GET /src/lib/utils.ts
+2026-02-21T11:04:48.956Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:04:49.051Z - GET /api/customers
+2026-02-21T11:04:49.063Z - GET /api/transactions
+2026-02-21T11:04:49.070Z - GET /api/settings
+2026-02-21T11:04:49.183Z - GET /api/transactions
+2026-02-21T11:04:49.191Z - GET /api/customers
+2026-02-21T11:04:49.201Z - GET /api/settings
+[2m6:05:19 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:20.320Z - GET /
+2026-02-21T11:05:20.647Z - GET /src/main.tsx?t=1771671919405
+2026-02-21T11:05:20.652Z - GET /@vite/client
+2026-02-21T11:05:20.655Z - GET /@react-refresh
+[2m6:05:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:20.734Z - GET /src/App.tsx
+[2m6:05:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:20.767Z - GET /src/index.css?t=1771671919405
+2026-02-21T11:05:20.789Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:05:20.826Z - GET /src/lib/utils.ts
+[2m6:05:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:21.477Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:05:21.500Z - GET /api/customers
+2026-02-21T11:05:21.510Z - GET /api/transactions
+2026-02-21T11:05:21.516Z - GET /api/settings
+2026-02-21T11:05:26.206Z - GET /api/settings
+2026-02-21T11:05:26.213Z - GET /api/transactions
+2026-02-21T11:05:26.215Z - GET /api/customers
+[2m6:05:43 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:44.804Z - GET /
+2026-02-21T11:05:45.607Z - GET /src/main.tsx?t=1771671943708
+2026-02-21T11:05:45.614Z - GET /@vite/client
+[2m6:05:45 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:45.653Z - GET /@react-refresh
+2026-02-21T11:05:45.666Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:05:45.697Z - GET /src/App.tsx
+2026-02-21T11:05:45.703Z - GET /src/index.css?t=1771671943708
+[2m6:05:45 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:45.776Z - GET /src/lib/utils.ts
+[2m6:05:45 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:46.678Z - GET /
+2026-02-21T11:05:46.995Z - GET /src/main.tsx?t=1771671945836
+2026-02-21T11:05:46.998Z - GET /@vite/client
+2026-02-21T11:05:47.002Z - GET /@react-refresh
+[2m6:05:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:47.034Z - GET /src/index.css?t=1771671945836
+2026-02-21T11:05:47.037Z - GET /src/App.tsx
+2026-02-21T11:05:47.049Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:05:47.066Z - GET /src/lib/utils.ts
+[2m6:05:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:47.715Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:05:47.778Z - GET /api/customers
+2026-02-21T11:05:47.791Z - GET /api/transactions
+2026-02-21T11:05:47.797Z - GET /api/settings
+2026-02-21T11:05:48.128Z - GET /api/customers
+2026-02-21T11:05:48.134Z - GET /api/transactions
+2026-02-21T11:05:48.140Z - GET /api/settings
+2026-02-21T11:05:48.310Z - GET /
+2026-02-21T11:05:48.498Z - GET /src/main.tsx?t=1771671947307
+2026-02-21T11:05:48.500Z - GET /@vite/client
+2026-02-21T11:05:48.518Z - GET /@react-refresh
+[2m6:05:48 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:48.549Z - GET /src/App.tsx
+2026-02-21T11:05:48.552Z - GET /src/index.css?t=1771671947307
+2026-02-21T11:05:48.578Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:05:48.601Z - GET /src/lib/utils.ts
+[2m6:05:48 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:05:48 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:05:48 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:49.199Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:05:49.216Z - GET /api/customers
+2026-02-21T11:05:49.221Z - GET /api/transactions
+2026-02-21T11:05:49.230Z - GET /api/settings
+2026-02-21T11:05:49.360Z - GET /
+2026-02-21T11:05:49.381Z - GET /api/customers
+2026-02-21T11:05:49.610Z - GET /src/main.tsx?t=1771671948935
+2026-02-21T11:05:49.612Z - GET /@vite/client
+[2m6:05:49 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:49.675Z - GET /@react-refresh
+[2m6:05:49 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:49.699Z - GET /node_modules/vite/dist/client/env.mjs
+2026-02-21T11:05:49.702Z - GET /src/App.tsx
+2026-02-21T11:05:49.741Z - GET /src/index.css?t=1771671948935
+2026-02-21T11:05:49.762Z - GET /src/lib/utils.ts
+[2m6:05:49 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+[2m6:05:49 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:50.390Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:05:50.411Z - GET /api/customers
+2026-02-21T11:05:50.418Z - GET /api/transactions
+2026-02-21T11:05:50.432Z - GET /api/settings
+2026-02-21T11:05:50.511Z - GET /api/customers
+2026-02-21T11:05:50.526Z - GET /api/transactions
+2026-02-21T11:05:50.544Z - GET /api/settings
+2026-02-21T11:05:51.314Z - GET /
+2026-02-21T11:05:51.664Z - GET /src/main.tsx?t=1771671949994
+2026-02-21T11:05:51.674Z - GET /@vite/client
+2026-02-21T11:05:51.684Z - GET /@react-refresh
+[2m6:05:51 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:51.726Z - GET /src/App.tsx
+2026-02-21T11:05:51.780Z - GET /src/index.css?t=1771671949994
+2026-02-21T11:05:51.784Z - GET /node_modules/vite/dist/client/env.mjs
+[2m6:05:51 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2moutput.txt[22m
+2026-02-21T11:05:51.822Z - GET /src/lib/utils.ts
+2026-02-21T11:05:52.623Z - GET /public/uploads/icon.png
+Files in the public directory are served at the root path.
+Instead of /public/uploads/icon.png, use /uploads/icon.png.
+2026-02-21T11:05:52.661Z - GET /api/customers
+2026-02-21T11:05:52.685Z - GET /api/transactions
+2026-02-21T11:05:52.704Z - GET /api/settings
+2026-02-21T11:05:52.765Z - GET /api/customers
+2026-02-21T11:05:52.786Z - GET /api/transactions
+2026-02-21T11:05:52.811Z - GET /api/settings
+2026-02-21T11:06:14.523Z - GET /
