@@ -505,7 +505,7 @@ export default function App() {
     }
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: 'logo' | 'favicon') => {
+const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: 'logo' | 'favicon') => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -518,11 +518,16 @@ export default function App() {
         method: 'POST',
         body: formData
       });
+      const result = await res.json();
       if (res.ok) {
+        alert(`${key === 'logo' ? 'Logo' : 'Favicon'} berhasil diupload!`);
         fetchData();
+      } else {
+        alert(`Gagal upload: ${result.error || 'Terjadi kesalahan'}`);
       }
     } catch (error) {
       console.error('Error uploading file:', error);
+      alert('Terjadi kesalahan koneksi saat upload file.');
     }
   };
 
@@ -555,7 +560,7 @@ export default function App() {
     }
   };
 
-  const handleBackup = async () => {
+const handleBackup = async () => {
     try {
       const res = await fetch('/api/backup');
       if (res.ok) {
@@ -563,14 +568,15 @@ export default function App() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `laundry-backup-${new Date().toISOString().split('T')[0]}.db`;
+        a.download = `laundry-backup-${new Date().toISOString().split('T')[0]}.json`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
         alert('Backup berhasil didownload!');
       } else {
-        alert('Gagal membuat backup');
+        const result = await res.json();
+        alert(`Gagal membuat backup: ${result.error || 'Terjadi kesalahan'}`);
       }
     } catch (error) {
       console.error('Error creating backup:', error);
@@ -586,17 +592,24 @@ export default function App() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('backup', file);
-
     try {
+      const fileText = await file.text();
+      const backupData = JSON.parse(fileText);
+      
+      if (!backupData.customers && !backupData.transactions && !backupData.settings) {
+        alert('Format file backup tidak valid.');
+        return;
+      }
+
       const res = await fetch('/api/restore', {
         method: 'POST',
-        body: formData
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(backupData)
       });
       
       if (res.ok) {
-        alert('Restore berhasil! Silakan refresh halaman.');
+        const result = await res.json();
+        alert(result.message || 'Restore berhasil!');
         fetchData();
       } else {
         const result = await res.json();
@@ -604,7 +617,7 @@ export default function App() {
       }
     } catch (error) {
       console.error('Error restoring:', error);
-      alert('Terjadi kesalahan saat merestore database');
+      alert('Terjadi kesalahan saat merestore database.');
     }
   };
 
@@ -1306,10 +1319,10 @@ export default function App() {
                         </div>
                       </div>
                       <label className="block">
-                        <input type="file" accept=".db" className="hidden" onChange={handleRestore} />
+<input type="file" accept=".json" className="hidden" onChange={handleRestore} />
                         <div className="w-full border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl p-4 text-center cursor-pointer hover:border-amber-500 transition-colors">
                           <RotateCcw className="w-6 h-6 mx-auto text-slate-400" />
-                          <p className="text-sm text-slate-500 mt-1">Pilih file backup (.db)</p>
+                          <p className="text-sm text-slate-500 mt-1">Pilih file backup (.json)</p>
                         </div>
                       </label>
                     </div>

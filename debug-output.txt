@@ -1,0 +1,44 @@
+TURSO_URL: exists
+TURSO_TOKEN: exists
+
+=== ALL TABLES ===
+[
+  {
+    "name": "customers"
+  },
+  {
+    "name": "sqlite_sequence"
+  },
+  {
+    "name": "transactions"
+  },
+  {
+    "name": "transaction_items"
+  },
+  {
+    "name": "settings"
+  }
+]
+
+=== SETTINGS TABLE STRUCTURE ===
+[
+  {
+    "cid": 0,
+    "name": "key",
+    "type": "TEXT",
+    "notnull": 0,
+    "dflt_value": null,
+    "pk": 1
+  },
+  {
+    "cid": 1,
+    "name": "value",
+    "type": "TEXT",
+    "notnull": 0,
+    "dflt_value": null,
+    "pk": 0
+  }
+]
+
+=== SETTINGS DATA ===
+[]
