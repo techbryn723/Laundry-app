@@ -22,7 +22,6 @@ app.use((req, res, next) => {
 });
 
 // Static file serving untuk uploads (favicon, logo, dll) - mendukung lokal dan Vercel
-// Urutan penting: cek yang lokal dulu, lalu /tmp untuk Vercel
 const localUploads = path.join(process.cwd(), 'public', 'uploads');
 if (fs.existsSync(localUploads)) {
   app.use('/uploads', express.static(localUploads));
@@ -43,7 +42,6 @@ const db = createClient({
 // Konfigurasi Multer untuk upload file - menggunakan /tmp untuk Vercel
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Untuk Vercel, gunakan /tmp, untuk development gunakan public/uploads
     const isVercel = process.env.VERCEL === '1' || !fs.existsSync(path.join(process.cwd(), 'public'));
     const uploadDir = isVercel 
       ? '/tmp/uploads' 
@@ -62,10 +60,24 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// Helper function untuk mengkonversi BigInt ke number/string (Turso returns BigInt)
+const serializeBigInt = (obj: any): any => {
+  if (obj === null || obj === undefined) return obj;
+  if (typeof obj === 'bigint') return obj.toString();
+  if (Array.isArray(obj)) return obj.map(serializeBigInt);
+  if (typeof obj === 'object') {
+    const result: any = {};
+    for (const key in obj) {
+      result[key] = serializeBigInt(obj[key]);
+    }
+    return result;
+  }
+  return obj;
+};
+
 // Helper function to ensure tables exist
 async function ensureTables() {
   try {
-    // Create customers table if not exists
     await db.execute(`
       CREATE TABLE IF NOT EXISTS customers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -77,7 +89,6 @@ async function ensureTables() {
       )
     `);
     
-    // Create transactions table if not exists
     await db.execute(`
       CREATE TABLE IF NOT EXISTS transactions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -92,7 +103,6 @@ async function ensureTables() {
       )
     `);
     
-    // Create transaction_items table if not exists
     await db.execute(`
       CREATE TABLE IF NOT EXISTS transaction_items (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -106,7 +116,6 @@ async function ensureTables() {
       )
     `);
     
-    // Create settings table if not exists
     await db.execute(`
       CREATE TABLE IF NOT EXISTS settings (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -133,7 +142,7 @@ ensureTables();
 app.get('/api/customers', async (req, res) => {
   try {
     const result = await db.execute("SELECT * FROM customers ORDER BY id DESC");
-    res.status(200).json(result.rows);
+    res.status(200).json(serializeBigInt(result.rows));
   } catch (error: any) {
     console.error("Error getting customers:", error.message);
     res.status(500).json({ error: "Gagal mengambil data konsumen: " + error.message });
@@ -153,7 +162,7 @@ app.post('/api/customers', async (req, res) => {
       sql: "INSERT INTO customers (name, phone, email, address) VALUES (?, ?, ?, ?)",
       args: [name, phone || null, email || null, address || null]
     });
-    res.status(201).json({ success: true, id: result.lastInsertRowid });
+    res.status(201).json(serializeBigInt({ success: true, id: result.lastInsertRowid }));
   } catch (error: any) {
     console.error("Error adding customer:", error.message);
     res.status(500).json({ error: "Gagal menambah konsumen: " + error.message });
@@ -196,7 +205,6 @@ app.delete('/api/customers/:id', async (req, res) => {
 // GET all transactions
 app.get('/api/transactions', async (req, res) => {
   try {
-    // Get transactions with customer name
     const result = await db.execute(`
       SELECT t.*, c.name as customer_name, c.phone as customer_phone
       FROM transactions t
@@ -204,7 +212,6 @@ app.get('/api/transactions', async (req, res) => {
       ORDER BY t.id DESC
     `);
     
-    // Get items for each transaction
     const transactions = await Promise.all(result.rows.map(async (t) => {
       const itemsResult = await db.execute({
         sql: "SELECT * FROM transaction_items WHERE transaction_id = ?",
@@ -213,7 +220,7 @@ app.get('/api/transactions', async (req, res) => {
       return { ...t, items: itemsResult.rows };
     }));
     
-    res.status(200).json(transactions);
+    res.status(200).json(serializeBigInt(transactions));
   } catch (error: any) {
     console.error("Error getting transactions:", error.message);
     res.status(500).json({ error: "Gagal mengambil data transaksi: " + error.message });
@@ -225,10 +232,8 @@ app.post('/api/transactions', async (req, res) => {
   try {
     const { customer_id, items, total_amount, status, pickup_date, note } = req.body;
     
-    // Generate ticket number
     const ticketNumber = 'LW' + Date.now();
     
-    // Insert transaction
     const result = await db.execute({
       sql: `INSERT INTO transactions (customer_id, ticket_number, total_amount, status, pickup_date, note, created_at) 
             VALUES (?, ?, ?, ?, ?, ?, datetime('now', 'localtime'))`,
@@ -237,7 +242,6 @@ app.post('/api/transactions', async (req, res) => {
     
     const transactionId = result.lastInsertRowid;
     
-    // Insert transaction items
     if (items && items.length > 0) {
       for (const item of items) {
         await db.execute({
@@ -248,7 +252,7 @@ app.post('/api/transactions', async (req, res) => {
       }
     }
     
-    res.status(201).json({ success: true, id: transactionId, ticket_number: ticketNumber });
+    res.status(201).json(serializeBigInt({ success: true, id: transactionId, ticket_number: ticketNumber }));
   } catch (error: any) {
     console.error("Error adding transaction:", error.message);
     res.status(500).json({ error: "Gagal menambah transaksi: " + error.message });
@@ -278,13 +282,11 @@ app.delete('/api/transactions/:id', async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Delete transaction items first
     await db.execute({
       sql: "DELETE FROM transaction_items WHERE transaction_id = ?",
       args: [id]
     });
     
-    // Delete transaction
     await db.execute({
       sql: "DELETE FROM transactions WHERE id = ?",
       args: [id]
@@ -304,15 +306,14 @@ app.get('/api/settings', async (req, res) => {
   try {
     const result = await db.execute("SELECT * FROM settings LIMIT 1");
     if (result.rows.length > 0) {
-      res.status(200).json(result.rows[0]);
+      res.status(200).json(serializeBigInt(result.rows[0]));
     } else {
-      // Create default settings if not exist
       await db.execute({
         sql: "INSERT INTO settings (business_name, address, phone) VALUES (?, ?, ?)",
         args: ['Laundry', '', '']
       });
       const newResult = await db.execute("SELECT * FROM settings LIMIT 1");
-      res.status(200).json(newResult.rows[0]);
+      res.status(200).json(serializeBigInt(newResult.rows[0]));
     }
   } catch (error: any) {
     console.error("Error getting settings:", error.message);
@@ -325,7 +326,6 @@ app.patch('/api/settings', async (req, res) => {
   try {
     const { business_name, address, phone } = req.body;
     
-    // Check if settings exist
     const result = await db.execute("SELECT id FROM settings LIMIT 1");
     
     if (result.rows.length > 0) {
@@ -352,14 +352,13 @@ app.patch('/api/settings', async (req, res) => {
 // POST upload file (logo/favicon)
 app.post('/api/settings/upload', upload.single('file'), async (req, res) => {
   try {
-    const { key } = req.body; // 'logo' or 'favicon'
+    const { key } = req.body;
     const file = req.file;
     
     if (!file) {
       return res.status(400).json({ error: "Tidak ada file yang diupload" });
     }
     
-    // Get current settings
     const result = await db.execute("SELECT id FROM settings LIMIT 1");
     const filePath = `/uploads/${file.filename}`;
     
@@ -391,22 +390,20 @@ app.post('/api/settings/upload', upload.single('file'), async (req, res) => {
 // GET backup
 app.get('/api/backup', async (req, res) => {
   try {
-    // For Turso, we need to export data as JSON
     const customers = await db.execute("SELECT * FROM customers");
     const transactions = await db.execute("SELECT * FROM transactions");
     const transactionItems = await db.execute("SELECT * FROM transaction_items");
     const settings = await db.execute("SELECT * FROM settings");
     
     const backup = {
-      customers: customers.rows,
-      transactions: transactions.rows,
-      transactionItems: transactionItems.rows,
-      settings: settings.rows,
+      customers: serializeBigInt(customers.rows),
+      transactions: serializeBigInt(transactions.rows),
+      transactionItems: serializeBigInt(transactionItems.rows),
+      settings: serializeBigInt(settings.rows),
       exportedAt: new Date().toISOString(),
       version: '1.0'
     };
     
-    // Kirim sebagai JSON download
     const jsonStr = JSON.stringify(backup, null, 2);
     const fileName = `laundry-backup-${new Date().toISOString().split('T')[0]}.json`;
     
@@ -420,39 +417,30 @@ app.get('/api/backup', async (req, res) => {
   }
 });
 
-// POST restore - mendukung multipart/form-data (file upload) DAN JSON
+// POST restore
 app.post('/api/restore', async (req, res) => {
   try {
-    // Cek apakah ada file yang diupload
     const contentType = req.headers['content-type'] || '';
     let backup: any;
     
     if (contentType.includes('multipart/form-data')) {
-      // Jika menggunakan FormData (file upload)
       const { backup: backupFile } = req.body;
-      // Untuk sekarang, parse manual karena multer sudah handle
-      // Ini akan menggunakan middleware upload yang sama
     } else {
-      // Langsung JSON
       backup = req.body;
     }
     
-    // Jika tidak ada body, coba lagi
     if (!backup) {
       return res.status(400).json({ error: "Data backup tidak ditemukan. Pastikan file JSON valid." });
     }
     
-    // Validasi format backup
     if (!backup.customers && !backup.transactions && !backup.settings) {
       return res.status(400).json({ error: "Format backup tidak valid" });
     }
     
-    // Clear existing data
     await db.execute("DELETE FROM transaction_items");
     await db.execute("DELETE FROM transactions");
     await db.execute("DELETE FROM customers");
     
-    // Restore customers
     if (backup.customers && Array.isArray(backup.customers)) {
       for (const c of backup.customers) {
         await db.execute({
@@ -462,7 +450,6 @@ app.post('/api/restore', async (req, res) => {
       }
     }
     
-    // Restore transactions
     if (backup.transactions && Array.isArray(backup.transactions)) {
       for (const t of backup.transactions) {
         await db.execute({
@@ -472,7 +459,6 @@ app.post('/api/restore', async (req, res) => {
       }
     }
     
-    // Restore transaction items
     if (backup.transactionItems && Array.isArray(backup.transactionItems)) {
       for (const item of backup.transactionItems) {
         await db.execute({
@@ -482,7 +468,6 @@ app.post('/api/restore', async (req, res) => {
       }
     }
     
-    // Restore settings
     if (backup.settings && Array.isArray(backup.settings) && backup.settings.length > 0) {
       const s = backup.settings[0];
       await db.execute({
@@ -500,12 +485,9 @@ app.post('/api/restore', async (req, res) => {
 
 // ==================== TEST ENDPOINT ====================
 
-// Contoh rute GET untuk testing di browser: localhost:3001/api/test
 app.get('/api/test', (req, res) => {
   res.json({ message: "Backend aman!" });
 });
-
-// ==================== ENDPOINTS LAMA (DEPRECATED) ====================
 
 // Endpoint untuk Simpan Data (contoh lama)
 app.post('/api/save', async (req, res) => {
@@ -513,7 +495,6 @@ app.post('/api/save', async (req, res) => {
     const data = req.body; 
     console.log("Data masuk:", data);
 
-    // Contoh query simpan (sesuaikan nama tabel & kolom dengan DB Turso kamu)
     await db.execute({
       sql: "INSERT INTO users (name, email) VALUES (?, ?)",
       args: [data.name, data.email],

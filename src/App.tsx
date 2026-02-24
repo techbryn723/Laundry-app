@@ -5,19 +5,19 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Users, 
-  Receipt, 
+import {
+  Users,
+  Receipt,
   FileText,
   Download,
   Printer,
   FileSpreadsheet,
-  Settings as SettingsIcon, 
-  Plus, 
-  Search, 
-  Moon, 
-  Sun, 
-  ShoppingBag, 
+  Settings as SettingsIcon,
+  Plus,
+  Search,
+  Moon,
+  Sun,
+  ShoppingBag,
   Footprints,
   LayoutDashboard,
   TrendingUp,
@@ -45,95 +45,103 @@ import QRCode from 'qrcode';
 // --- Components ---
 
 const Card = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <div className={cn(
-    "glass rounded-3xl md:rounded-4xl p-6 md:p-8 transition-all duration-500",
-    "bg-white/90 dark:bg-slate-900/40 border-slate-200/60 dark:border-white/5",
-    "hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1",
-    className
-  )}>
+  <motion.div
+    whileHover={{ y: -4, scale: 1.005 }}
+    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+    className={cn(
+      "rounded-2xl p-6 md:p-7",
+      "bg-white dark:bg-slate-900/60",
+      "border border-indigo-50 dark:border-white/5",
+      "shadow-sm hover:shadow-lg hover:shadow-indigo-100/60 dark:hover:shadow-indigo-900/30",
+      "transition-shadow duration-300",
+      className
+    )}
+  >
     {children}
-  </div>
+  </motion.div>
 );
 
-const Button = ({ 
-  children, 
-  onClick, 
-  variant = 'primary', 
+const Button = ({
+  children,
+  onClick,
+  variant = 'primary',
   className,
   type = 'button',
   disabled
-}: { 
-  children: React.ReactNode; 
-  onClick?: () => void; 
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
   className?: string;
   type?: 'button' | 'submit';
   disabled?: boolean;
 }) => {
   const variants = {
-    primary: "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-600/20 dark:shadow-none",
-    secondary: "bg-white text-indigo-600 hover:bg-indigo-50 border border-indigo-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10",
-    ghost: "bg-transparent hover:bg-indigo-50 dark:hover:bg-white/5 text-slate-600 dark:text-slate-400 dark:hover:text-white",
-    danger: "bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-500/20 dark:shadow-none"
+    primary: "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-600/25 dark:shadow-indigo-900/40",
+    secondary: "bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-100 dark:bg-white/5 dark:text-indigo-300 dark:border-white/10 dark:hover:bg-white/10",
+    ghost: "bg-transparent hover:bg-indigo-50 dark:hover:bg-white/5 text-slate-600 hover:text-indigo-700 dark:text-slate-400 dark:hover:text-white",
+    danger: "bg-rose-500 text-white hover:bg-rose-600 shadow-lg shadow-rose-500/25"
   };
 
   return (
-    <button 
+    <motion.button
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
       type={type}
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "px-6 md:px-8 py-3.5 rounded-2xl font-bold transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-3 text-sm md:text-base",
+        "px-5 md:px-7 py-3 rounded-xl font-semibold flex items-center justify-center gap-2.5 text-sm transition-colors duration-200",
         variants[variant],
-        disabled && "opacity-50 cursor-not-allowed",
+        disabled && "opacity-50 cursor-not-allowed pointer-events-none",
         className
       )}
     >
       {children}
-    </button>
+    </motion.button>
   );
 };
 
 const Input = ({ label, ...props }: any) => (
-  <div className="space-y-2.5">
-    {label && <label className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 ml-2">{label}</label>}
-    <input 
+  <div className="space-y-1.5 group">
+    {label && <label className="text-xs font-semibold uppercase tracking-widest text-slate-400 group-focus-within:text-indigo-500 transition-colors ml-1">{label}</label>}
+    <input
       {...props}
-      className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 rounded-2xl px-5 py-4 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:focus:ring-indigo-500/40 transition-all duration-300 shadow-sm text-base"
+      className="w-full bg-indigo-50/40 dark:bg-slate-900/50 border border-indigo-100/80 dark:border-white/5 rounded-xl px-4 py-3.5 text-slate-800 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all text-sm"
     />
   </div>
 );
 
 const Select = ({ label, options, ...props }: any) => (
-  <div className="space-y-2.5">
-    {label && <label className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 ml-2">{label}</label>}
+  <div className="space-y-1.5 group">
+    {label && <label className="text-xs font-semibold uppercase tracking-widest text-slate-400 group-focus-within:text-indigo-500 transition-colors ml-1">{label}</label>}
     <div className="relative">
-      <select 
+      <select
         {...props}
-        className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 rounded-2xl px-5 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:focus:ring-indigo-500/40 transition-all duration-300 appearance-none shadow-sm text-base"
+        className="w-full bg-indigo-50/40 dark:bg-slate-900/50 border border-indigo-100/80 dark:border-white/5 rounded-xl px-4 py-3.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all appearance-none text-sm"
       >
-        <option value="" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Pilih...</option>
+        <option value="" className="bg-white dark:bg-slate-900">Pilih...</option>
         {options.map((opt: any) => (
-          <option key={opt.value} value={opt.value} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
+          <option key={opt.value} value={opt.value} className="bg-white dark:bg-slate-900">
             {opt.label}
           </option>
         ))}
       </select>
-      <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 dark:text-slate-600">
-        <ArrowRight size={18} className="rotate-90" />
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-indigo-400">
+        <ArrowRight size={16} className="rotate-90" />
       </div>
     </div>
   </div>
 );
 
 // --- Receipt Modal with QR Code ---
-const ReceiptModal = ({ 
-  transaction, 
-  settings, 
+const ReceiptModal = ({
+  transaction,
+  settings,
   onClose,
-  onPrint 
-}: { 
-  transaction: Transaction; 
+  onPrint
+}: {
+  transaction: Transaction;
   settings: Settings;
   onClose: () => void;
   onPrint: () => void;
@@ -183,15 +191,15 @@ const ReceiptModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
-      <motion.div 
-        initial={{ scale: 0.9, opacity: 0, y: 20 }} 
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0 }}
         className="relative w-full max-w-md"
@@ -248,23 +256,23 @@ const ReceiptModal = ({
             </div>
 
             {/* Total */}
-            <div className="flex justify-between items-center text-xl">
+            <div className="flex justify-between items-center text-xl p-4 bg-indigo-50 dark:bg-indigo-900/10 rounded-2xl">
               <span className="font-bold">TOTAL</span>
-              <span className="font-bold text-indigo-600">Rp {transaction.total_amount?.toLocaleString()}</span>
+              <span className="font-bold text-indigo-600 dark:text-indigo-400">Rp {transaction.total_amount?.toLocaleString()}</span>
             </div>
 
             {/* Pickup Date */}
-            <div className="bg-slate-100 dark:bg-slate-800 rounded-xl p-4">
-              <p className="text-xs text-slate-500 uppercase">Tanggal Pengambilan</p>
-              <p className="font-semibold">{transaction.pickup_date ? new Date(transaction.pickup_date).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '-'}</p>
+            <div className="bg-white dark:bg-slate-800/50 rounded-2xl p-4 border border-slate-100 dark:border-white/5">
+              <p className="text-xs text-indigo-400/80 uppercase font-bold tracking-wider">Tanggal Pengambilan</p>
+              <p className="font-semibold text-slate-900 dark:text-white">{transaction.pickup_date ? new Date(transaction.pickup_date).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '-'}</p>
             </div>
 
             {/* QR Code */}
-            <div className="flex justify-center py-4 bg-white">
+            <div className="flex justify-center py-6 bg-white rounded-2xl">
               {qrDataUrl ? (
                 <img src={qrDataUrl} alt="QR Code" className="w-32 h-32" />
               ) : (
-                <div className="w-32 h-32 bg-slate-200 animate-pulse rounded-lg"></div>
+                <div className="w-32 h-32 bg-slate-100 animate-pulse rounded-lg"></div>
               )}
             </div>
 
@@ -315,7 +323,7 @@ export default function App() {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
   const [takenNote, setTakenNote] = useState('');
-  const [pendingStatusChange, setPendingStatusChange] = useState<{id: number, status: string, pickup_date: string} | null>(null);
+  const [pendingStatusChange, setPendingStatusChange] = useState<{ id: number, status: string, pickup_date: string } | null>(null);
 
   // Report Filters
   const [reportFilter, setReportFilter] = useState({
@@ -343,6 +351,16 @@ export default function App() {
     }
   }, [isDarkMode]);
 
+  // Helper to check if image URL is accessible
+  const checkImageExists = async (url: string): Promise<boolean> => {
+    try {
+      const res = await fetch(url, { method: 'HEAD' });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  };
+
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -353,14 +371,43 @@ export default function App() {
       ]);
       const custData = await custRes.json();
       const transData = await transRes.json();
-      const settingsData = await settingsRes.json();
-      
+      let settingsData = await settingsRes.json();
+
+      // Validate and fix logo/favicon paths - clear invalid ones
+      if (settingsData.logo) {
+        const logoExists = await checkImageExists(settingsData.logo);
+        if (!logoExists) {
+          console.warn('Logo not found, clearing invalid path');
+          settingsData.logo = null;
+        }
+      }
+      if (settingsData.favicon) {
+        const faviconExists = await checkImageExists(settingsData.favicon);
+        if (!faviconExists) {
+          console.warn('Favicon not found, clearing invalid path');
+          settingsData.favicon = null;
+        }
+      }
+
       setCustomers(custData);
       setTransactions(transData);
       setSettings(settingsData);
-      
+
       if (settingsData.business_name) {
         document.title = settingsData.business_name;
+      }
+
+      // Update favicon dynamically
+      if (settingsData.favicon) {
+        let faviconLink = document.getElementById('dynamic-favicon') as HTMLLinkElement;
+        if (!faviconLink) {
+          faviconLink = document.createElement('link');
+          faviconLink.type = 'image/x-icon';
+          faviconLink.rel = 'icon';
+          document.head.appendChild(faviconLink);
+        }
+        // Add cache busting to force refresh
+        faviconLink.href = `${settingsData.favicon}?v=${Date.now()}`;
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -373,24 +420,26 @@ export default function App() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    
+
     try {
       const url = editingCustomer ? `/api/customers/${editingCustomer.id}` : '/api/customers';
       const method = editingCustomer ? 'PUT' : 'POST';
-      
+
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      
+
+      const result = await res.json();
+
       if (res.ok) {
         setShowCustomerModal(false);
         setEditingCustomer(null);
         await fetchData();
       } else {
-        const result = await res.json();
         alert(`Gagal menyimpan konsumen: ${result.error || 'Terjadi kesalahan'}`);
+        return;
       }
     } catch (error) {
       console.error('Error saving customer:', error);
@@ -402,11 +451,15 @@ export default function App() {
     if (!confirm('Hapus konsumen ini?')) return;
     try {
       const res = await fetch(`/api/customers/${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        await fetchData();
+      const result = await res.json();
+      if (!res.ok) {
+        alert(result.error || 'Gagal menghapus konsumen');
+        return;
       }
+      await fetchData();
     } catch (error) {
       console.error('Error deleting customer:', error);
+      alert('Terjadi kesalahan koneksi.');
     }
   };
 
@@ -416,7 +469,7 @@ export default function App() {
     const customer_id = formData.get('customer_id');
     const status = formData.get('status');
     const pickup_date = formData.get('pickup_date');
-    
+
     if (!customer_id || !pickup_date) {
       alert('Silakan lengkapi form.');
       return;
@@ -436,18 +489,20 @@ export default function App() {
           pickup_date
         })
       });
-      
+
       const result = await res.json();
-      
+
       if (res.ok) {
         setShowTransactionModal(false);
         setNewTransactionItems([{ item_type: 'shoe', service_type: 'Deep Clean', quantity: 1, unit: 'pasang', amount: 50000 }]);
         fetchData();
       } else {
         alert(`Gagal menyimpan transaksi: ${result.error || 'Terjadi kesalahan'}`);
+        return;
       }
     } catch (error) {
       console.error('Error adding transaction:', error);
+      alert('Terjadi kesalahan koneksi.');
     }
   };
 
@@ -477,16 +532,17 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, pickup_date, note })
       });
-      
+
       const result = await res.json();
       if (!res.ok) {
         alert(result.error || 'Gagal mengupdate status');
-        fetchData();
-      } else {
-        fetchData();
+        return;
       }
+      // Only fetch data when successful
+      fetchData();
     } catch (error) {
       console.error('Error updating transaction:', error);
+      alert('Terjadi kesalahan koneksi.');
     }
   };
 
@@ -497,15 +553,17 @@ export default function App() {
       const result = await res.json();
       if (!res.ok) {
         alert(result.error || 'Gagal menghapus transaksi');
-      } else {
-        await fetchData();
+        return;
       }
+      // Only fetch data when successful
+      await fetchData();
     } catch (error) {
       console.error('Error deleting transaction:', error);
+      alert('Terjadi kesalahan koneksi.');
     }
   };
 
-const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: 'logo' | 'favicon') => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: 'logo' | 'favicon') => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -524,6 +582,7 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: 'lo
         fetchData();
       } else {
         alert(`Gagal upload: ${result.error || 'Terjadi kesalahan'}`);
+        return;
       }
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -546,13 +605,15 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: 'lo
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      
+
+      const result = await res.json();
+
       if (res.ok) {
         alert('Pengaturan berhasil disimpan!');
         fetchData();
       } else {
-        const result = await res.json();
         alert(`Gagal menyimpan: ${result.error || 'Terjadi kesalahan'}`);
+        return;
       }
     } catch (error) {
       console.error('Error saving settings:', error);
@@ -560,24 +621,24 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: 'lo
     }
   };
 
-const handleBackup = async () => {
+  const handleBackup = async () => {
     try {
       const res = await fetch('/api/backup');
-      if (res.ok) {
-        const blob = await res.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `laundry-backup-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-        alert('Backup berhasil didownload!');
-      } else {
-        const result = await res.json();
+      const result = await res.json();
+      if (!res.ok) {
         alert(`Gagal membuat backup: ${result.error || 'Terjadi kesalahan'}`);
+        return;
       }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `laundry-backup-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      alert('Backup berhasil didownload!');
     } catch (error) {
       console.error('Error creating backup:', error);
       alert('Terjadi kesalahan saat membuat backup');
@@ -595,7 +656,7 @@ const handleBackup = async () => {
     try {
       const fileText = await file.text();
       const backupData = JSON.parse(fileText);
-      
+
       if (!backupData.customers && !backupData.transactions && !backupData.settings) {
         alert('Format file backup tidak valid.');
         return;
@@ -606,15 +667,14 @@ const handleBackup = async () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(backupData)
       });
-      
-      if (res.ok) {
-        const result = await res.json();
-        alert(result.message || 'Restore berhasil!');
-        fetchData();
-      } else {
-        const result = await res.json();
+
+      const result = await res.json();
+      if (!res.ok) {
         alert(`Gagal merestore: ${result.error || 'Terjadi kesalahan'}`);
+        return;
       }
+      alert(result.message || 'Restore berhasil!');
+      fetchData();
     } catch (error) {
       console.error('Error restoring:', error);
       alert('Terjadi kesalahan saat merestore database.');
@@ -625,7 +685,7 @@ const handleBackup = async () => {
     if (!confirm('⚠️ PERINGATAN! Anda akan menghapus SEMUA data:\n\n- Semua konsumen\n- Semua transaksi\n\nTindakan ini TIDAK BISA DIURUNGKAN!\n\nApakah Anda yakin?')) {
       return;
     }
-    
+
     if (!confirm('Apakah Anda benar-benar yakin? Semua data akan hilang permanen.')) {
       return;
     }
@@ -639,7 +699,7 @@ const handleBackup = async () => {
       for (const c of customers) {
         await fetch(`/api/customers/${c.id}`, { method: 'DELETE' });
       }
-      
+
       alert('Semua data berhasil dihapus!');
       fetchData();
     } catch (error) {
@@ -699,22 +759,22 @@ const handleBackup = async () => {
   const generatePDF = (preview = false) => {
     const doc = new jsPDF();
     const filtered = getFilteredTransactions();
-    
+
     doc.setFillColor(79, 70, 229);
     doc.rect(0, 0, 210, 50, 'F');
     doc.setFillColor(67, 56, 202);
     doc.rect(0, 45, 210, 5, 'F');
-    
+
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(28);
     doc.text(settings.business_name || 'Laundry', 14, 25);
-    
+
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
     doc.text('Laporan Transaksi', 14, 35);
     doc.text(`Alamat: ${settings.address || '-'} | Telp: ${settings.phone || '-'}`, 14, 40);
-    
+
     const tableData = filtered.map(t => [
       t.ticket_number,
       t.customer_name,
@@ -736,7 +796,7 @@ const handleBackup = async () => {
 
     const total = filtered.reduce((acc, curr) => acc + curr.total_amount, 0);
     const finalY = (doc as any).lastAutoTable.finalY + 15;
-    
+
     doc.setFillColor(79, 70, 229);
     doc.roundedRect(130, finalY - 5, 65, 15, 2, 2, 'F');
     doc.setTextColor(255, 255, 255);
@@ -780,11 +840,11 @@ const handleBackup = async () => {
 
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
-      case 'lunas': return "bg-emerald-500 text-white";
-      case 'proses': return "bg-amber-500 text-white";
-      case 'cicilan': return "bg-blue-500 text-white";
-      case 'diambil': return "bg-purple-500 text-white";
-      default: return "bg-slate-500 text-white";
+      case 'lunas': return "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 ring-1 ring-emerald-200 dark:ring-emerald-500/20";
+      case 'proses': return "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400 ring-1 ring-amber-200 dark:ring-amber-500/20";
+      case 'cicilan': return "bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 ring-1 ring-blue-200 dark:ring-blue-500/20";
+      case 'diambil': return "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-400 ring-1 ring-violet-200 dark:ring-violet-500/20";
+      default: return "bg-slate-50 text-slate-600 dark:bg-slate-500/10 dark:text-slate-400 ring-1 ring-slate-200 dark:ring-slate-500/20";
     }
   };
 
@@ -804,40 +864,45 @@ const handleBackup = async () => {
     return date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   };
 
-  const logoUrl = settings.logo || (settings as any).logo;
+  // Helper function to get proper image URL with cache busting
+  const getImageUrl = (path: string | undefined | null) => {
+    if (!path) return null;
+    // Add cache busting query parameter to ensure fresh image is loaded
+    const separator = path.includes('?') ? '&' : '?';
+    return `${path}${separator}v=${Date.now()}`;
+  };
+
+  const logoUrl = getImageUrl(settings.logo);
+  const faviconUrl = getImageUrl(settings.favicon);
 
   return (
     <div className={cn(
       "min-h-screen gradient-bg transition-colors duration-300",
-      isDarkMode ? "text-slate-50 selection:bg-white/30" : "text-slate-900 selection:bg-indigo-100"
+      "text-slate-800 dark:text-slate-50"
     )}>
       {/* Mobile Toggle Button */}
-      <button 
+      <button
         onClick={() => setIsMobileSidebarVisible(true)}
-        className={cn(
-          "fixed top-4 left-4 z-40 md:hidden p-3 rounded-2xl glass shadow-lg transition-all duration-300 active:scale-90",
-          !isDarkMode ? "bg-white/90 text-indigo-600 border-indigo-100" : "bg-slate-900/90 text-white border-white/5"
-        )}
+        className="fixed top-4 left-4 z-40 md:hidden p-2.5 rounded-xl bg-white shadow-md text-indigo-600 border border-indigo-50"
       >
         <Menu size={20} />
       </button>
 
       {/* Sidebar / Navigation */}
       <nav className={cn(
-        "fixed top-0 h-full glass border-r-0 z-50 flex flex-col transition-all duration-500 ease-in-out",
-        isSidebarExpanded ? "md:w-72 p-6" : "md:w-24 p-4",
-        isMobileSidebarVisible ? "left-0 w-72 p-6 shadow-[20px_0_60px_rgba(0,0,0,0.2)]" : "-left-full md:left-0",
-        !isDarkMode && "bg-white/95 border-indigo-50 shadow-[10px_0_40px_rgba(79,70,229,0.05)]",
-        "rounded-r-4xl md:rounded-r-5xl"
+        "fixed top-0 h-full z-50 flex flex-col transition-all duration-500 ease-in-out",
+        isDarkMode ? "bg-slate-900/80 backdrop-blur-2xl border-r border-white/5" : "bg-white border-r border-indigo-50/80 shadow-[2px_0_20px_rgba(99,102,241,0.05)]",
+        isSidebarExpanded ? "md:w-72 p-6" : "md:w-20 p-4",
+        isMobileSidebarVisible ? "left-0 w-72 p-6 shadow-2xl" : "-left-full md:left-0",
       )}>
-        <button 
+        <button
           onClick={() => setIsMobileSidebarVisible(false)}
           className="absolute top-6 right-6 md:hidden p-2 text-slate-400 hover:text-indigo-600 transition-colors"
         >
           <X size={20} />
         </button>
 
-        <div 
+        <div
           onClick={() => {
             if (window.innerWidth >= 768) {
               setIsSidebarExpanded(!isSidebarExpanded);
@@ -849,35 +914,42 @@ const handleBackup = async () => {
           )}
         >
           <div className={cn(
-            "rounded-2xl flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-500 group-hover:scale-110",
+            "rounded-2xl flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-500 group-hover:scale-110 shadow-lg shadow-indigo-500/20",
             isSidebarExpanded ? "w-12 h-12" : "w-10 h-10",
             !logoUrl && "bg-indigo-600"
           )}>
             {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="w-full h-full object-cover" onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
-                (e.target as HTMLImageElement).parentElement!.classList.add('bg-indigo-600');
-                (e.target as HTMLImageElement).parentElement!.innerHTML = '<svg class="text-white w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>';
-              }} />
+              <img
+                src={logoUrl}
+                alt="Logo"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const img = e.target as HTMLImageElement;
+                  img.style.display = 'none';
+                  img.parentElement!.classList.add('bg-indigo-600');
+                  img.parentElement!.innerHTML = '<svg class="text-white w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>';
+                }}
+                key={logoUrl}
+              />
             ) : (
               <ShoppingBag className="text-white w-7 h-7" />
             )}
           </div>
           <span className={cn(
             "font-display font-bold text-2xl tracking-tight text-center transition-all duration-500 overflow-hidden whitespace-nowrap",
-            isDarkMode ? "text-white" : "text-indigo-700",
+            isDarkMode ? "text-white" : "text-slate-900",
             !isSidebarExpanded ? "w-0 opacity-0" : "w-auto opacity-100",
             !isMobileSidebarVisible && "hidden md:block"
           )}>{settings.business_name || 'Laundry'}</span>
         </div>
 
-        <div className="flex-1 space-y-2 md:space-y-3">
+        <div className="flex-1 space-y-1">
           {[
-            { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-            { id: 'customers', icon: Users, label: 'Konsumen' },
-            { id: 'transactions', icon: Receipt, label: 'Transaksi' },
-            { id: 'reports', icon: FileText, label: 'Laporan' },
-            { id: 'settings', icon: SettingsIcon, label: 'Pengaturan' }
+            { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard', activeColor: 'text-indigo-600', activeBg: 'bg-indigo-50' },
+            { id: 'customers', icon: Users, label: 'Konsumen', activeColor: 'text-rose-600', activeBg: 'bg-rose-50' },
+            { id: 'transactions', icon: Receipt, label: 'Transaksi', activeColor: 'text-amber-600', activeBg: 'bg-amber-50' },
+            { id: 'reports', icon: FileText, label: 'Laporan', activeColor: 'text-emerald-600', activeBg: 'bg-emerald-50' },
+            { id: 'settings', icon: SettingsIcon, label: 'Pengaturan', activeColor: 'text-violet-600', activeBg: 'bg-violet-50' }
           ].map((item) => (
             <button
               key={item.id}
@@ -886,37 +958,48 @@ const handleBackup = async () => {
                 if (window.innerWidth < 768) setIsMobileSidebarVisible(false);
               }}
               className={cn(
-                "w-full flex items-center rounded-2xl transition-all duration-300 group",
-                isSidebarExpanded ? "p-3 md:p-4 justify-start gap-4" : "p-3 justify-center",
-                activeTab === item.id 
-                  ? (isDarkMode ? "bg-white/10 text-white shadow-lg" : "bg-indigo-600 text-white shadow-xl shadow-indigo-600/30") 
-                  : (isDarkMode ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-indigo-50 hover:text-indigo-600")
+                "w-full flex items-center rounded-xl transition-all duration-200 group relative",
+                isSidebarExpanded ? "px-3 py-2.5 justify-start gap-3" : "p-2.5 justify-center",
+                activeTab === item.id
+                  ? (isDarkMode
+                    ? "bg-white/10 text-white"
+                    : `${item.activeBg} ${item.activeColor} font-semibold`)
+                  : (isDarkMode
+                    ? "text-slate-500 hover:bg-white/5 hover:text-slate-200"
+                    : "text-slate-400 hover:bg-slate-50 hover:text-slate-700")
               )}
               title={!isSidebarExpanded ? item.label : ""}
             >
-              <item.icon size={22} className={cn(
-                "transition-transform duration-300 group-hover:scale-110 flex-shrink-0",
-                activeTab === item.id ? "scale-110" : ""
+              <item.icon size={20} className={cn(
+                "flex-shrink-0 transition-transform duration-200",
+                activeTab === item.id ? "" : "group-hover:scale-110"
               )} />
               <span className={cn(
-                "font-bold tracking-wide transition-all duration-300 overflow-hidden whitespace-nowrap",
+                "text-sm font-medium transition-all duration-300 overflow-hidden whitespace-nowrap",
                 !isSidebarExpanded ? "w-0 opacity-0" : "w-auto opacity-100",
                 !isMobileSidebarVisible && "hidden md:block"
               )}>{item.label}</span>
+              {activeTab === item.id && !isDarkMode && (
+                <motion.div
+                  layoutId="activeSide"
+                  className={cn("absolute right-0 w-1 h-5 rounded-l-full", item.activeColor.replace('text', 'bg'))}
+                />
+              )}
             </button>
           ))}
         </div>
 
         <div className={cn(
-          "mt-auto pt-6 border-t border-slate-100 dark:border-white/5 transition-all duration-300",
-          isSidebarExpanded ? "space-y-2 md:space-y-3" : "space-y-4"
+          "mt-auto pt-4 border-t transition-all duration-300",
+          isDarkMode ? "border-white/5" : "border-indigo-50",
+          isSidebarExpanded ? "space-y-1" : "space-y-3"
         )}>
-          <button 
+          <button
             onClick={() => setIsDarkMode(!isDarkMode)}
             className={cn(
-              "w-full flex items-center rounded-2xl transition-all duration-300 group",
-              isSidebarExpanded ? "p-3 md:p-4 justify-start gap-4" : "p-3 justify-center",
-              isDarkMode ? "text-slate-400 hover:bg-white/5 hover:text-white" : "text-slate-500 hover:bg-indigo-50 hover:text-indigo-600"
+              "w-full flex items-center rounded-xl transition-all duration-200 group",
+              isSidebarExpanded ? "px-3 py-2.5 justify-start gap-3" : "p-2.5 justify-center",
+              isDarkMode ? "text-slate-500 hover:bg-white/5 hover:text-slate-200" : "text-slate-400 hover:bg-slate-50 hover:text-slate-700"
             )}
           >
             <div className="transition-transform duration-500 group-hover:rotate-12 flex-shrink-0">
@@ -934,79 +1017,100 @@ const handleBackup = async () => {
       {/* Main Content */}
       <main className={cn(
         "min-h-screen transition-all duration-500",
-        isSidebarExpanded ? "md:ml-72" : "md:ml-24"
+        isSidebarExpanded ? "md:ml-72" : "md:ml-20"
       )}>
         <div className="p-4 md:p-8 pt-16 md:pt-8">
           {activeTab === 'dashboard' && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-8">Dashboard</h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <Card className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white hover:from-indigo-400 hover:to-purple-500 hover:shadow-indigo-500/30">
-                  <div className="flex items-center justify-between">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+              <h1 className="text-2xl md:text-3xl font-display font-bold mb-6 text-slate-800 dark:text-white">Dashboard</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                {/* Revenue — primary hero card */}
+                <Card className="bg-gradient-to-br from-indigo-500 to-violet-600 text-white border-none !shadow-lg !shadow-indigo-400/25 dark:!shadow-indigo-900/30 lg:col-span-1">
+                  <div className="flex items-end justify-between h-full">
                     <div>
-                      <p className="text-white/80 text-sm font-medium">Total Pendapatan</p>
-                      <p className="text-3xl font-bold mt-2">Rp {stats.totalRevenue.toLocaleString()}</p>
+                      <p className="text-indigo-200 text-xs font-semibold uppercase tracking-widest">Total Pendapatan</p>
+                      <p className="text-3xl font-display font-bold mt-1">Rp {stats.totalRevenue.toLocaleString()}</p>
                     </div>
-                    <TrendingUp className="w-10 h-10 opacity-50" />
+                    <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <TrendingUp className="w-5 h-5 text-white" />
+                    </div>
                   </div>
                 </Card>
-                <Card className="hover:shadow-pink-500/20 hover:-translate-y-1">
+
+                {/* Customers */}
+                <Card>
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-500 text-sm font-medium">Total Konsumen</p>
-                      <p className="text-3xl font-bold mt-2 text-indigo-600">{stats.totalCustomers}</p>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Konsumen</p>
+                      <p className="text-3xl font-display font-bold mt-1 text-slate-800 dark:text-white">{stats.totalCustomers}</p>
                     </div>
-                    <Users className="w-10 h-10 text-pink-400" />
+                    <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-xl flex items-center justify-center">
+                      <Users className="w-5 h-5 text-rose-500" />
+                    </div>
                   </div>
+                  <p className="text-xs text-rose-400 font-medium mt-3">Total terdaftar</p>
                 </Card>
-                <Card className="hover:shadow-amber-500/20 hover:-translate-y-1">
+
+                {/* Active Orders */}
+                <Card>
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-500 text-sm font-medium">Sedang Proses</p>
-                      <p className="text-3xl font-bold mt-2 text-amber-500">{stats.activeOrders}</p>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Dalam Proses</p>
+                      <p className="text-3xl font-display font-bold mt-1 text-slate-800 dark:text-white">{stats.activeOrders}</p>
                     </div>
-                    <Clock className="w-10 h-10 text-amber-400" />
+                    <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/20 rounded-xl flex items-center justify-center">
+                      <Clock className="w-5 h-5 text-amber-500" />
+                    </div>
                   </div>
+                  <p className="text-xs text-amber-400 font-medium mt-3">Sedang dikerjakan</p>
                 </Card>
-                <Card className="hover:shadow-emerald-500/20 hover:-translate-y-1">
+
+                {/* Completed */}
+                <Card>
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-slate-500 text-sm font-medium">Sudah Diambil</p>
-                      <p className="text-3xl font-bold mt-2 text-emerald-500">{stats.completedOrders}</p>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Diambil</p>
+                      <p className="text-3xl font-display font-bold mt-1 text-slate-800 dark:text-white">{stats.completedOrders}</p>
                     </div>
-                    <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+                    <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                    </div>
                   </div>
+                  <p className="text-xs text-emerald-400 font-medium mt-3">Sudah selesai</p>
                 </Card>
               </div>
 
-              <Card>
-                <h2 className="text-xl font-bold mb-6">Transaksi Terbaru</h2>
+              <Card className="p-0 overflow-hidden">
+                <div className="px-6 py-5 border-b border-indigo-50 dark:border-white/5 flex justify-between items-center">
+                  <h2 className="text-base font-semibold text-slate-700 dark:text-white">Transaksi Terbaru</h2>
+                  <Button variant="ghost" className="text-xs py-1.5 px-3 h-auto">Lihat Semua</Button>
+                </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-slate-200 dark:border-white/10">
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Ticket</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Konsumen</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Total</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Status</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Aksi</th>
+                      <tr className="border-b border-indigo-50/80 dark:border-white/5 bg-indigo-50/30 dark:bg-white/2">
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Ticket</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Konsumen</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Total</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</th>
+                        <th className="text-right py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {transactions.slice(0, 5).map((t) => (
-                        <tr key={t.id} className="border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5">
-                          <td className="py-4 px-4 font-medium">{t.ticket_number}</td>
-                          <td className="py-4 px-4">{t.customer_name}</td>
-                          <td className="py-4 px-4">Rp {t.total_amount?.toLocaleString()}</td>
-                          <td className="py-4 px-4">
+                        <tr key={t.id} className="border-b border-indigo-50/80 dark:border-white/5 hover:bg-indigo-50/40 dark:hover:bg-white/3 transition-colors">
+                          <td className="py-3.5 px-5 text-sm font-mono font-medium text-indigo-600 dark:text-indigo-400">{t.ticket_number}</td>
+                          <td className="py-3.5 px-5 text-sm text-slate-700 dark:text-slate-200">{t.customer_name}</td>
+                          <td className="py-3.5 px-5 text-sm font-semibold text-slate-800 dark:text-slate-100">Rp {t.total_amount?.toLocaleString()}</td>
+                          <td className="py-3.5 px-5">
                             <span className={cn(
-                              "px-3 py-1 rounded-full text-xs font-bold uppercase",
+                              "px-2.5 py-1 rounded-lg text-xs font-semibold",
                               getStatusBadgeClass(t.status)
                             )}>{getStatusLabel(t.status)}</span>
                           </td>
-                          <td className="py-4 px-4">
+                          <td className="py-3.5 px-5 text-right">
                             <Button variant="ghost" onClick={() => printReceipt(t)} className="p-2">
-                              <Printer size={18} />
+                              <Printer size={15} />
                             </Button>
                           </td>
                         </tr>
@@ -1019,31 +1123,31 @@ const handleBackup = async () => {
           )}
 
           {activeTab === 'customers' && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-                <h1 className="text-3xl md:text-4xl font-display font-bold">Konsumen</h1>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-800 dark:text-white">Konsumen</h1>
                 <Button onClick={() => { setEditingCustomer(null); setShowCustomerModal(true); }}>
-                  <Plus size={20} /> Tambah Konsumen
+                  <Plus size={16} /> Tambah Konsumen
                 </Button>
               </div>
-              <Card>
+              <Card className="p-0 overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-slate-200 dark:border-white/10">
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Nama</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Telepon</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Alamat</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Aksi</th>
+                      <tr className="border-b border-indigo-50/80 dark:border-white/5 bg-indigo-50/30 dark:bg-white/2">
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Nama</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Telepon</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Alamat</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {customers.map((c) => (
-                        <tr key={c.id} className="border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5">
-                          <td className="py-4 px-4 font-medium">{c.name}</td>
-                          <td className="py-4 px-4">{c.phone}</td>
-                          <td className="py-4 px-4">{c.address}</td>
-                          <td className="py-4 px-4">
+                        <tr key={c.id} className="border-b border-indigo-50/60 dark:border-white/5 hover:bg-indigo-50/40 dark:hover:bg-white/3 transition-colors">
+                          <td className="py-3.5 px-5 text-sm font-medium text-slate-800 dark:text-slate-100">{c.name}</td>
+                          <td className="py-3.5 px-5 text-sm text-slate-500 dark:text-slate-400">{c.phone}</td>
+                          <td className="py-3.5 px-5 text-sm text-slate-500 dark:text-slate-400">{c.address}</td>
+                          <td className="py-3.5 px-5">
                             <div className="flex gap-2">
                               <Button variant="ghost" onClick={() => { setEditingCustomer(c); setShowCustomerModal(true); }} className="p-2">
                                 <SettingsIcon size={18} />
@@ -1063,70 +1167,68 @@ const handleBackup = async () => {
           )}
 
           {activeTab === 'transactions' && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-                <h1 className="text-3xl md:text-4xl font-display font-bold">Transaksi</h1>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-800 dark:text-white">Transaksi</h1>
                 <Button onClick={() => setShowTransactionModal(true)}>
-                  <Plus size={20} /> Transaksi Baru
+                  <Plus size={16} /> Transaksi Baru
                 </Button>
               </div>
-              <Card>
+              <Card className="p-0 overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-slate-200 dark:border-white/10">
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Ticket</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Konsumen</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Total</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Status</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Tgl Pengambilan</th>
-                        <th className="text-left py-4 px-4 text-sm font-bold text-slate-500 uppercase">Aksi</th>
+                      <tr className="border-b border-indigo-50/80 dark:border-white/5 bg-indigo-50/30 dark:bg-white/2">
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Ticket</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Konsumen</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Total</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</th>
+                        <th className="text-left py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Tgl Ambil</th>
+                        <th className="text-right py-3 px-5 text-xs font-semibold text-slate-400 uppercase tracking-wider">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {transactions.map((t) => {
                         const isTaken = t.status === 'diambil';
                         return (
-                        <tr key={t.id} className="border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5">
-                          <td className="py-4 px-4 font-medium">{t.ticket_number}</td>
-                          <td className="py-4 px-4">{t.customer_name}</td>
-                          <td className="py-4 px-4">Rp {t.total_amount?.toLocaleString()}</td>
-                          <td className="py-4 px-4">
-                            <select
-                              value={t.status}
-                              onChange={(e) => handleStatusChangeClick(t.id, e.target.value, t.pickup_date)}
-                              disabled={isTaken}
-                              className={cn(
-                                "px-3 py-1 rounded-full text-xs font-bold uppercase border-0 cursor-pointer",
-                                getStatusBadgeClass(t.status),
-                                isTaken && "opacity-60 cursor-not-allowed"
-                              )}
-                            >
-                              <option value="proses">Proses</option>
-                              <option value="cicilan">Cicilan</option>
-                              <option value="lunas">Lunas</option>
-                              <option value="diambil">Diambil</option>
-                            </select>
-                          </td>
-                          <td className="py-4 px-4 text-sm">{formatDate(t.pickup_date)}</td>
-                          <td className="py-4 px-4">
-                            <div className="flex gap-1">
-                              {/* QR Code Button */}
-                              <Button variant="ghost" onClick={() => openReceipt(t)} className="p-2" title="Lihat QR Code">
-                                <QrCode size={18} />
-                              </Button>
-                              {/* Print Button */}
-                              <Button variant="ghost" onClick={() => printReceipt(t)} className="p-2" title="Cetak Struk">
-                                <Printer size={18} />
-                              </Button>
-                              {/* Delete Button - always enabled */}
-                              <Button variant="ghost" onClick={() => handleDeleteTransaction(t.id)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20" title="Hapus">
-                                <Trash2 size={18} />
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      )})}
+                          <tr key={t.id} className="border-b border-indigo-50/60 dark:border-white/5 hover:bg-indigo-50/40 dark:hover:bg-white/3 transition-colors">
+                            <td className="py-3.5 px-5 text-sm font-mono font-medium text-indigo-600 dark:text-indigo-400">{t.ticket_number}</td>
+                            <td className="py-3.5 px-5 text-sm text-slate-700 dark:text-slate-200">{t.customer_name}</td>
+                            <td className="py-3.5 px-5 text-sm font-semibold text-slate-800 dark:text-slate-100">Rp {t.total_amount?.toLocaleString()}</td>
+                            <td className="py-3.5 px-5">
+                              <select
+                                value={t.status}
+                                onChange={(e) => handleStatusChangeClick(t.id, e.target.value, t.pickup_date)}
+                                disabled={isTaken}
+                                className={cn(
+                                  "bg-transparent border-none px-2 py-1 rounded-lg text-xs font-semibold cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20",
+                                  getStatusBadgeClass(t.status),
+                                  isTaken && "opacity-60 cursor-not-allowed"
+                                )}
+                              >
+                                <option value="proses" className="bg-white text-amber-700">Proses</option>
+                                <option value="cicilan" className="bg-white text-blue-700">Cicilan</option>
+                                <option value="lunas" className="bg-white text-emerald-700">Lunas</option>
+                                <option value="diambil" className="bg-white text-violet-700">Diambil</option>
+                              </select>
+                            </td>
+                            <td className="py-3.5 px-5 text-sm text-slate-500 dark:text-slate-400">{formatDate(t.pickup_date)}</td>
+                            <td className="py-3.5 px-5">
+                              <div className="flex gap-1 justify-end">
+                                <Button variant="ghost" onClick={() => openReceipt(t)} className="p-1.5" title="Lihat QR Code">
+                                  <QrCode size={15} />
+                                </Button>
+                                <Button variant="ghost" onClick={() => printReceipt(t)} className="p-1.5" title="Cetak Struk">
+                                  <Printer size={15} />
+                                </Button>
+                                <Button variant="ghost" onClick={() => handleDeleteTransaction(t.id)} className="p-1.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20" title="Hapus">
+                                  <Trash2 size={15} />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -1135,9 +1237,9 @@ const handleBackup = async () => {
           )}
 
           {activeTab === 'reports' && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-8">Laporan</h1>
-              <Card className="mb-6">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+              <h1 className="text-2xl md:text-3xl font-display font-bold mb-6 text-slate-800 dark:text-white">Laporan</h1>
+              <Card className="mb-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                   <Select
                     label="Tipe Laporan"
@@ -1194,20 +1296,22 @@ const handleBackup = async () => {
                 </Button>
               </div>
 
-              <Card>
-                <h2 className="text-xl font-bold mb-6">Ringkasan</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="text-center p-6 bg-slate-50 dark:bg-white/5 rounded-2xl">
-                    <p className="text-slate-500 text-sm font-medium">Total Transaksi</p>
-                    <p className="text-3xl font-bold text-indigo-600 mt-2">{getFilteredTransactions().length}</p>
+              <Card className="p-0 overflow-hidden">
+                <div className="p-8 border-b border-slate-50 dark:border-white/5 bg-white dark:bg-transparent">
+                  <h2 className="text-xl font-bold">Ringkasan</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+                  <div className="text-center p-10 bg-white dark:bg-white/5 border-r border-slate-50 dark:border-white/5">
+                    <p className="text-indigo-400 text-xs font-bold uppercase tracking-wider">Total Transaksi</p>
+                    <p className="text-4xl font-bold text-indigo-600 mt-2">{getFilteredTransactions().length}</p>
                   </div>
-                  <div className="text-center p-6 bg-slate-50 dark:bg-white/5 rounded-2xl">
-                    <p className="text-slate-500 text-sm font-medium">Total Pendapatan</p>
-                    <p className="text-3xl font-bold text-emerald-500 mt-2">Rp {getFilteredTransactions().reduce((acc, t) => acc + (t.total_amount || 0), 0).toLocaleString()}</p>
+                  <div className="text-center p-10 bg-white dark:bg-white/5 border-r border-slate-50 dark:border-white/5">
+                    <p className="text-emerald-400 text-xs font-bold uppercase tracking-wider">Total Pendapatan</p>
+                    <p className="text-4xl font-bold text-emerald-500 mt-2">Rp {getFilteredTransactions().reduce((acc, t) => acc + (t.total_amount || 0), 0).toLocaleString()}</p>
                   </div>
-                  <div className="text-center p-6 bg-slate-50 dark:bg-white/5 rounded-2xl">
-                    <p className="text-slate-500 text-sm font-medium">Rata-rata per Transaksi</p>
-                    <p className="text-3xl font-bold text-amber-500 mt-2">Rp {getFilteredTransactions().length > 0 ? Math.round(getFilteredTransactions().reduce((acc, t) => acc + (t.total_amount || 0), 0) / getFilteredTransactions().length).toLocaleString() : 0}</p>
+                  <div className="text-center p-10 bg-white dark:bg-white/5">
+                    <p className="text-amber-400 text-xs font-bold uppercase tracking-wider">Rata-rata / Transaksi</p>
+                    <p className="text-4xl font-bold text-amber-500 mt-2">Rp {getFilteredTransactions().length > 0 ? Math.round(getFilteredTransactions().reduce((acc, t) => acc + (t.total_amount || 0), 0) / getFilteredTransactions().length).toLocaleString() : 0}</p>
                   </div>
                 </div>
               </Card>
@@ -1215,8 +1319,8 @@ const handleBackup = async () => {
           )}
 
           {activeTab === 'settings' && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-8">Pengaturan</h1>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+              <h1 className="text-2xl md:text-3xl font-display font-bold mb-6 text-slate-800 dark:text-white">Pengaturan</h1>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <Card>
                   <h2 className="text-xl font-bold mb-6">Informasi Bisnis</h2>
@@ -1253,9 +1357,15 @@ const handleBackup = async () => {
                       <div className="flex items-center gap-4">
                         <div className="w-20 h-20 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-indigo-200 dark:border-indigo-800">
                           {logoUrl ? (
-                            <img src={logoUrl} alt="Logo" className="w-full h-full object-contain" onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }} />
+                            <img
+                              src={logoUrl}
+                              alt="Logo"
+                              className="w-full h-full object-contain"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).style.display = 'none';
+                              }}
+                              key={logoUrl}
+                            />
                           ) : (
                             <ShoppingBag className="text-indigo-400 w-10 h-10" />
                           )}
@@ -1272,9 +1382,14 @@ const handleBackup = async () => {
                     <div>
                       <label className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 ml-2 block mb-2">Favicon</label>
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
-                          {settings.favicon ? (
-                            <img src={settings.favicon} alt="Favicon" className="w-full h-full object-cover" />
+                        <div className="w-12 h-12 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden border border-slate-100">
+                          {faviconUrl ? (
+                            <img
+                              src={faviconUrl}
+                              alt="Favicon"
+                              className="w-full h-full object-cover"
+                              key={faviconUrl}
+                            />
                           ) : (
                             <span className="text-xs text-slate-400">None</span>
                           )}
@@ -1294,9 +1409,9 @@ const handleBackup = async () => {
                 <Card className="lg:col-span-2">
                   <h2 className="text-xl font-bold mb-6">Backup & Restore Database</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="p-6 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl">
+                    <div className="p-6 bg-white dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl border border-indigo-50">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
                           <Download className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                         </div>
                         <div>
@@ -1308,9 +1423,9 @@ const handleBackup = async () => {
                         <Download size={18} /> Download Backup
                       </Button>
                     </div>
-                    <div className="p-6 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl">
+                    <div className="p-6 bg-white dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl border border-amber-50">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center">
                           <RotateCcw className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                         </div>
                         <div>
@@ -1319,8 +1434,8 @@ const handleBackup = async () => {
                         </div>
                       </div>
                       <label className="block">
-<input type="file" accept=".json" className="hidden" onChange={handleRestore} />
-                        <div className="w-full border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl p-4 text-center cursor-pointer hover:border-amber-500 transition-colors">
+                        <input type="file" accept=".json" className="hidden" onChange={handleRestore} />
+                        <div className="w-full border-2 border-dashed border-slate-200 dark:border-slate-600 rounded-2xl p-4 text-center cursor-pointer hover:border-amber-500 transition-colors">
                           <RotateCcw className="w-6 h-6 mx-auto text-slate-400" />
                           <p className="text-sm text-slate-500 mt-1">Pilih file backup (.json)</p>
                         </div>
@@ -1341,259 +1456,267 @@ const handleBackup = async () => {
             </motion.div>
           )}
         </div>
-      </main>
+      </main >
 
       {/* Customer Modal */}
       <AnimatePresence>
-        {showCustomerModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-              onClick={() => setShowCustomerModal(false)}
-            />
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }} 
-              animate={{ scale: 1, opacity: 1 }} 
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-lg"
-            >
-              <Card className="max-h-[90vh] overflow-y-auto">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold">{editingCustomer ? 'Edit Konsumen' : 'Tambah Konsumen'}</h2>
-                  <Button variant="ghost" onClick={() => setShowCustomerModal(false)} className="p-2">
-                    <X size={20} />
-                  </Button>
-                </div>
-                <form onSubmit={handleAddCustomer} className="space-y-4">
-                  <Input
-                    label="Nama"
-                    name="name"
-                    defaultValue={editingCustomer?.name || ''}
-                    placeholder="John Doe"
-                    required
-                  />
-                  <Input
-                    label="Telepon"
-                    name="phone"
-                    defaultValue={editingCustomer?.phone || ''}
-                    placeholder="+62 812 3456 7890"
-                  />
-                  <Input
-                    label="Email"
-                    name="email"
-                    type="email"
-                    defaultValue={editingCustomer?.email || ''}
-                    placeholder="john@example.com"
-                  />
-                  <Input
-                    label="Alamat"
-                    name="address"
-                    defaultValue={editingCustomer?.address || ''}
-                    placeholder="Jl. Contoh No. 123"
-                  />
-                  <div className="flex gap-4 pt-4">
-                    <Button type="button" variant="ghost" onClick={() => setShowCustomerModal(false)} className="flex-1">Batal</Button>
-                    <Button type="submit" className="flex-1">Simpan</Button>
+        {
+          showCustomerModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                onClick={() => setShowCustomerModal(false)}
+              />
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="relative w-full max-w-lg"
+              >
+                <Card className="max-h-[90vh] overflow-y-auto">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">{editingCustomer ? 'Edit Konsumen' : 'Tambah Konsumen'}</h2>
+                    <Button variant="ghost" onClick={() => setShowCustomerModal(false)} className="p-2">
+                      <X size={20} />
+                    </Button>
                   </div>
-                </form>
-              </Card>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+                  <form onSubmit={handleAddCustomer} className="space-y-4">
+                    <Input
+                      label="Nama"
+                      name="name"
+                      defaultValue={editingCustomer?.name || ''}
+                      placeholder="John Doe"
+                      required
+                    />
+                    <Input
+                      label="Telepon"
+                      name="phone"
+                      defaultValue={editingCustomer?.phone || ''}
+                      placeholder="+62 812 3456 7890"
+                    />
+                    <Input
+                      label="Email"
+                      name="email"
+                      type="email"
+                      defaultValue={editingCustomer?.email || ''}
+                      placeholder="john@example.com"
+                    />
+                    <Input
+                      label="Alamat"
+                      name="address"
+                      defaultValue={editingCustomer?.address || ''}
+                      placeholder="Jl. Contoh No. 123"
+                    />
+                    <div className="flex gap-4 pt-4">
+                      <Button type="button" variant="ghost" onClick={() => setShowCustomerModal(false)} className="flex-1">Batal</Button>
+                      <Button type="submit" className="flex-1">Simpan</Button>
+                    </div>
+                  </form>
+                </Card>
+              </motion.div>
+            </div>
+          )
+        }
+      </AnimatePresence >
 
       {/* Transaction Modal */}
       <AnimatePresence>
-        {showTransactionModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-              onClick={() => setShowTransactionModal(false)}
-            />
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }} 
-              animate={{ scale: 1, opacity: 1 }} 
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto"
-            >
-              <Card>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold">Transaksi Baru</h2>
-                  <Button variant="ghost" onClick={() => setShowTransactionModal(false)} className="p-2">
-                    <X size={20} />
-                  </Button>
-                </div>
-                <form onSubmit={handleAddTransaction} className="space-y-6">
-                  <Select
-                    label="Konsumen"
-                    name="customer_id"
-                    required
-                    options={customers.map(c => ({ value: c.id.toString(), label: c.name }))}
-                  />
+        {
+          showTransactionModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                onClick={() => setShowTransactionModal(false)}
+              />
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+              >
+                <Card>
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold">Transaksi Baru</h2>
+                    <Button variant="ghost" onClick={() => setShowTransactionModal(false)} className="p-2">
+                      <X size={20} />
+                    </Button>
+                  </div>
+                  <form onSubmit={handleAddTransaction} className="space-y-6">
+                    <Select
+                      label="Konsumen"
+                      name="customer_id"
+                      required
+                      options={customers.map(c => ({ value: c.id.toString(), label: c.name }))}
+                    />
 
-                  <Input
-                    label="Tanggal Penjemputan"
-                    name="pickup_date"
-                    type="datetime-local"
-                    required
-                  />
+                    <Input
+                      label="Tanggal Penjemputan"
+                      name="pickup_date"
+                      type="datetime-local"
+                      required
+                    />
 
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <label className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500">Item</label>
-                      <Button type="button" variant="ghost" onClick={addTransactionItem} className="text-sm py-2">
-                        <Plus size={16} /> Tambah Item
-                      </Button>
-                    </div>
-                    {newTransactionItems.map((item, index) => (
-                      <div key={index} className="p-4 bg-slate-50 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/10">
-                        <div className="flex justify-between items-start mb-4">
-                          <span className="text-sm font-bold text-slate-500">Item #{index + 1}</span>
-                          {newTransactionItems.length > 1 && (
-                            <Button type="button" variant="ghost" onClick={() => removeTransactionItem(index)} className="p-1 text-red-500">
-                              <Trash2 size={16} />
-                            </Button>
-                          )}
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <label className="text-xs font-bold uppercase tracking-[0.15em] text-slate-500">Item</label>
+                        <Button type="button" variant="ghost" onClick={addTransactionItem} className="text-sm py-2">
+                          <Plus size={16} /> Tambah Item
+                        </Button>
+                      </div>
+                      {newTransactionItems.map((item, index) => (
+                        <div key={index} className="p-6 bg-white dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/10 shadow-sm">
+                          <div className="flex justify-between items-start mb-4">
+                            <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest">Item #{index + 1}</span>
+                            {newTransactionItems.length > 1 && (
+                              <Button type="button" variant="ghost" onClick={() => removeTransactionItem(index)} className="p-2 h-auto text-rose-500 hover:bg-rose-50">
+                                <Trash2 size={16} />
+                              </Button>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                            <Select
+                              label="Jenis"
+                              value={item.item_type}
+                              onChange={(e: any) => updateTransactionItem(index, 'item_type', e.target.value)}
+                              options={[
+                                { value: 'shoe', label: 'Sepatu' },
+                                { value: 'bag', label: 'Tas' }
+                              ]}
+                            />
+                            <Select
+                              label="Layanan"
+                              value={item.service_type}
+                              onChange={(e: any) => updateTransactionItem(index, 'service_type', e.target.value)}
+                              options={[
+                                { value: 'Deep Clean', label: 'Deep Clean' },
+                                { value: 'Regular Clean', label: 'Regular Clean' },
+                                { value: 'Polish', label: 'Polish' },
+                                { value: 'Repaint', label: 'Repaint' },
+                                { value: 'Repair', label: 'Repair' },
+                                { value: 'Whitening', label: 'Whitening' }
+                              ]}
+                            />
+                            <Input
+                              label="Jumlah"
+                              type="number"
+                              value={item.quantity}
+                              onChange={(e: any) => updateTransactionItem(index, 'quantity', parseInt(e.target.value))}
+                            />
+                            <Input
+                              label="Unit"
+                              value={item.unit}
+                              onChange={(e: any) => updateTransactionItem(index, 'unit', e.target.value)}
+                              placeholder="pasang/pcs"
+                            />
+                            <Input
+                              label="Harga"
+                              type="number"
+                              value={item.amount}
+                              onChange={(e: any) => updateTransactionItem(index, 'amount', parseInt(e.target.value))}
+                            />
+                          </div>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                          <Select
-                            label="Jenis"
-                            value={item.item_type}
-                            onChange={(e: any) => updateTransactionItem(index, 'item_type', e.target.value)}
-                            options={[
-                              { value: 'shoe', label: 'Sepatu' },
-                              { value: 'bag', label: 'Tas' }
-                            ]}
-                          />
-                          <Select
-                            label="Layanan"
-                            value={item.service_type}
-                            onChange={(e: any) => updateTransactionItem(index, 'service_type', e.target.value)}
-                            options={[
-                              { value: 'Deep Clean', label: 'Deep Clean' },
-                              { value: 'Regular Clean', label: 'Regular Clean' },
-                              { value: 'Polish', label: 'Polish' },
-                              { value: 'Repaint', label: 'Repaint' },
-                              { value: 'Repair', label: 'Repair' },
-                              { value: 'Whitening', label: 'Whitening' }
-                            ]}
-                          />
-                          <Input 
-                            label="Jumlah" 
-                            type="number" 
-                            value={item.quantity}
-                            onChange={(e: any) => updateTransactionItem(index, 'quantity', parseInt(e.target.value))}
-                          />
-                          <Input 
-                            label="Unit" 
-                            value={item.unit}
-                            onChange={(e: any) => updateTransactionItem(index, 'unit', e.target.value)}
-                            placeholder="pasang/pcs"
-                          />
-                          <Input 
-                            label="Harga" 
-                            type="number" 
-                            value={item.amount}
-                            onChange={(e: any) => updateTransactionItem(index, 'amount', parseInt(e.target.value))}
-                          />
+                      ))}
+                    </div>
+
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-8 p-10 rounded-3xl bg-indigo-600 text-white shadow-2xl shadow-indigo-500/20">
+                      <div className="space-y-2 text-center md:text-left">
+                        <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/80">Total Amount Due</p>
+                        <p className="text-5xl font-bold font-display tracking-tighter">
+                          Rp {(newTransactionItems.reduce((acc, item) => acc + (item.amount || 0), 0) || 0).toLocaleString()}
+                        </p>
+                      </div>
+                      <div className="flex flex-col gap-6 w-full md:w-auto">
+                        <Select
+                          name="status"
+                          label="Initial Status"
+                          defaultValue="proses"
+                          className="bg-white/10 border-white/20 text-white focus:ring-white/30"
+                          options={[
+                            { value: 'proses', label: 'Proses' },
+                            { value: 'cicilan', label: 'Cicilan' },
+                            { value: 'lunas', label: 'Lunas' }
+                          ]}
+                        />
+                        <div className="flex gap-4">
+                          <Button onClick={() => setShowTransactionModal(false)} variant="ghost" className="flex-1 text-white hover:bg-white/10">Cancel</Button>
+                          <Button type="submit" variant="secondary" className="flex-1 bg-white text-indigo-600 hover:bg-indigo-50 border-none shadow-xl shadow-black/10">Simpan</Button>
                         </div>
                       </div>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-8 p-10 rounded-3xl bg-indigo-600 text-white shadow-2xl shadow-indigo-500/20">
-                    <div className="space-y-2 text-center md:text-left">
-                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/80">Total Amount Due</p>
-                      <p className="text-5xl font-bold font-display tracking-tighter">
-                        Rp {(newTransactionItems.reduce((acc, item) => acc + (item.amount || 0), 0) || 0).toLocaleString()}
-                      </p>
                     </div>
-                    <div className="flex flex-col gap-6 w-full md:w-auto">
-                      <Select 
-                        name="status" 
-                        label="Initial Status" 
-                        defaultValue="proses"
-                        className="bg-white/10 border-white/20 text-white focus:ring-white/30"
-                        options={[
-                          { value: 'proses', label: 'Proses' },
-                          { value: 'cicilan', label: 'Cicilan' },
-                          { value: 'lunas', label: 'Lunas' }
-                        ]}
-                      />
-                      <div className="flex gap-4">
-                        <Button onClick={() => setShowTransactionModal(false)} variant="ghost" className="flex-1 text-white hover:bg-white/10">Cancel</Button>
-                        <Button type="submit" variant="secondary" className="flex-1 bg-white text-indigo-600 hover:bg-indigo-50 border-none shadow-xl shadow-black/10">Save & Print</Button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </Card>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+                  </form>
+                </Card>
+              </motion.div>
+            </div>
+          )
+        }
+      </AnimatePresence >
 
       {/* Taken Status Modal */}
       <AnimatePresence>
-        {showTakenModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-              onClick={() => setShowTakenModal(false)}
-            />
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }} 
-              animate={{ scale: 1, opacity: 1 }} 
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-md"
-            >
-              <Card>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-purple-600">Konfirmasi Diambil</h2>
-                  <Button variant="ghost" onClick={() => setShowTakenModal(false)} className="p-2">
-                    <X size={20} />
-                  </Button>
-                </div>
-                <p className="text-slate-600 dark:text-slate-300 mb-4">Masukkan keterangan jika ada:</p>
-                <Input
-                  label="Keterangan"
-                  value={takenNote}
-                  onChange={(e: any) => setTakenNote(e.target.value)}
-                  placeholder="Catatan tambahan..."
-                />
-                <div className="flex gap-4 mt-6">
-                  <Button onClick={() => setShowTakenModal(false)} variant="ghost" className="flex-1">Batal</Button>
-                  <Button onClick={confirmTakenStatus} className="flex-1 bg-purple-600 hover:bg-purple-700">Simpan</Button>
-                </div>
-              </Card>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+        {
+          showTakenModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                onClick={() => setShowTakenModal(false)}
+              />
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="relative w-full max-w-md"
+              >
+                <Card>
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-purple-600">Konfirmasi Diambil</h2>
+                    <Button variant="ghost" onClick={() => setShowTakenModal(false)} className="p-2">
+                      <X size={20} />
+                    </Button>
+                  </div>
+                  <p className="text-slate-600 dark:text-slate-300 mb-4">Masukkan keterangan jika ada:</p>
+                  <Input
+                    label="Keterangan"
+                    value={takenNote}
+                    onChange={(e: any) => setTakenNote(e.target.value)}
+                    placeholder="Catatan tambahan..."
+                  />
+                  <div className="flex gap-4 mt-6">
+                    <Button onClick={() => setShowTakenModal(false)} variant="ghost" className="flex-1">Batal</Button>
+                    <Button onClick={confirmTakenStatus} className="flex-1 bg-purple-600 hover:bg-purple-700">Simpan</Button>
+                  </div>
+                </Card>
+              </motion.div>
+            </div>
+          )
+        }
+      </AnimatePresence >
 
       {/* Receipt Modal with QR Code */}
       <AnimatePresence>
-        {showReceiptModal && selectedTransaction && (
-          <ReceiptModal 
-            transaction={selectedTransaction} 
-            settings={settings}
-            onClose={() => {
-              setShowReceiptModal(false);
-              setSelectedTransaction(null);
-            }}
-            onPrint={handlePrintFromModal}
-          />
-        )}
-      </AnimatePresence>
-    </div>
+        {
+          showReceiptModal && selectedTransaction && (
+            <ReceiptModal
+              transaction={selectedTransaction}
+              settings={settings}
+              onClose={() => {
+                setShowReceiptModal(false);
+                setSelectedTransaction(null);
+              }}
+              onPrint={handlePrintFromModal}
+            />
+          )
+        }
+      </AnimatePresence >
+    </div >
   );
 }
